@@ -57,7 +57,8 @@ youtube.player=class extends HTMLElement
 	}
 	connectedCallback()
 	{
-		const iframe=document.querySelector('#youtube-player')
+		const iframe=this.shadowRoot.querySelector('#youtube-player')
+		document.body.append(iframe)
 		this.player=output.player(iframe)
 		this.shadowRoot.append(document.querySelector('#youtube-player'))
 	}
