@@ -35,9 +35,29 @@ youtube.player=class extends HTMLElement
 	}
 	connectedCallback()//@todo find a less hackish way to do this
 	{
-		const iframe=this.shadowRoot.querySelector('#youtube-player')
+		const
+		viewer=this,
+		iframe=this.shadowRoot.querySelector('#youtube-player')
 		document.body.append(iframe)//moved outside shadow dom to initalize
-		this.player=output.player(iframe)
+		this.player=new util.yt.Player(iframe,
+		{
+			height:'390',
+			width:'640',
+			videoId:viewer.state.video_id,
+			events:
+			{
+				'onReady':function({target})
+				{
+					//target.playVideo()
+				},
+				'onStateChange':function(evt)
+				{
+					console.log(evt)
+					//if (data==YT.PlayerState.PLAYING) 'do something'
+				}
+			}
+		})
+		//@todo use this.player.a instead of query selector?
 		this.shadowRoot.append(document.querySelector('#youtube-player'))
 	}
 	adoptedCallback()
