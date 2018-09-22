@@ -1,10 +1,20 @@
 import {config,output,util} from './output.mjs'
-const input={}
-input.state=function(viewer)
+//-1 – unstarted
+// 0 – ended
+// 1 – playing
+// 2 – paused
+// 3 – buffering
+// 5 – video cued
+function input(viewer,{data})
 {
-	viewer.state.video_id=viewer.player.getVideoData().video_id,
-	viewer.state.time=viewer.player.getCurrentTime()
-	output.event(viewer,'pause',{time:viewer.time})
+	const
+	{player}=viewer,
+	time=player.getCurrentTime()
+	console.log(player.getVideoData())
+	viewer.state.pause=data===util.yt.PlayerState.PAUSED
+	viewer.state.video_id=player.getVideoData().video_id,
+	viewer.state.time=time
+	output.event(viewer,'pause',{time})//@todo handle non-pause events
 }
 export default async function youtube(url='/node_modules/youtube-viewer/')
 {
@@ -47,11 +57,7 @@ youtube.player=class extends HTMLElement
 			events:
 			{
 				'onReady':({target})=>output.render(this),
-				'onStateChange':function(evt)
-				{
-					console.log(evt)
-					//if (data==YT.PlayerState.PLAYING) 'do something'
-				}
+				'onStateChange':evt=>input(viewer,evt)
 			}
 		})
 		//@todo use this.player.a instead of query selector?
