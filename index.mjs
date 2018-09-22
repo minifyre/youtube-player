@@ -1,6 +1,3 @@
-<!Doctype html>
-<div id=player></div>
-<script>
 document.body.append
 (
 	Object.assign
@@ -30,4 +27,3 @@ function onYouTubeIframeAPIReady()
 		}
 	})
 }
-</script>
