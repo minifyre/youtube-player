@@ -1,29 +1,26 @@
-document.body.append
-(
-	Object.assign
-	(
-		document.createElement('script'),
-		{src:'https://www.youtube.com/iframe_api'}
-	)
-)
-let player
-window.onYouTubeIframeAPIReady=function()
+import util from './util.mjs'
+window.onload=async function()
 {
-	player=new YT.Player(document.querySelector('#player'),
+	let player
+	window.onYouTubeIframeAPIReady=function()
 	{
-		height:'390',
-		width:'640',
-		videoId:'PUv66718DII',
-		events:
+		player=new YT.Player(document.querySelector('#player'),
 		{
-			'onReady':function(event)
+			height:'390',
+			width:'640',
+			videoId:'PUv66718DII',
+			events:
 			{
-				event.target.playVideo()
-			},
-			'onStateChange':function({data})
-			{
-				if (data==YT.PlayerState.PLAYING) 'do something'
+				'onReady':function(event)
+				{
+					event.target.playVideo()
+				},
+				'onStateChange':function({data})
+				{
+					if (data==YT.PlayerState.PLAYING) 'do something'
+				}
 			}
-		}
-	})
+		})
+	}
+	util.loadScript('https://www.youtube.com/iframe_api')
 }
