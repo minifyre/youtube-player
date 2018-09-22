@@ -7,7 +7,7 @@ document.body.append
 	)
 )
 let player
-function onYouTubeIframeAPIReady()
+window.onYouTubeIframeAPIReady=function()
 {
 	player=new YT.Player(document.querySelector('#player'),
 	{
