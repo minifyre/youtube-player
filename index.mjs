@@ -46,10 +46,7 @@ youtube.player=class extends HTMLElement
 			videoId:viewer.state.video_id,
 			events:
 			{
-				'onReady':function({target})
-				{
-					//target.playVideo()
-				},
+				'onReady':({target})=>output.render(this),
 				'onStateChange':function(evt)
 				{
 					console.log(evt)

@@ -4,8 +4,8 @@ const output={}
 output.event=(el,type,evt)=>el.dispatchEvent(new CustomEvent(type,evt))
 output.render=function({player,state})
 {
-	const {time,video_id}=state
+	const {paused,time,video_id}=state
 	player.loadVideoById(video_id,time)
-	player.pauseVideo()
+	if(paused) player.pauseVideo()
 }
 export {config,output,util}
