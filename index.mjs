@@ -1,26 +1,30 @@
 import util from './util.mjs'
-window.onload=async function()
+const config={}
+config.api='https://www.youtube.com/iframe_api'
+export default async function youtube()
 {
-	let player
-	window.onYouTubeIframeAPIReady=function()
+	const {error}=await new Promise(async function(res,rej)
 	{
-		player=new YT.Player(document.querySelector('#player'),
+		window.onYouTubeIframeAPIReady=()=>res({})
+		const {error}= await util.loadScript(config.api)
+		if(error) rej({error})
+	})
+	if(error) return {error}
+	const player=new YT.Player(document.querySelector('#player'),
+	{
+		height:'390',
+		width:'640',
+		videoId:'PUv66718DII',
+		events:
 		{
-			height:'390',
-			width:'640',
-			videoId:'PUv66718DII',
-			events:
+			'onReady':function({target})
 			{
-				'onReady':function(event)
-				{
-					event.target.playVideo()
-				},
-				'onStateChange':function({data})
-				{
-					if (data==YT.PlayerState.PLAYING) 'do something'
-				}
+				target.playVideo()
+			},
+			'onStateChange':function({data})
+			{
+				//if (data==YT.PlayerState.PLAYING) 'do something'
 			}
-		})
-	}
-	util.loadScript('https://www.youtube.com/iframe_api')
+		}
+	})
 }
