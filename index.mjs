@@ -30,12 +30,6 @@ export default async function youtube(url='/node_modules/youtube-viewer/')
 	})
 	if(error) return {error}
 	util.yt=window.YT
-
-	const
-	importFile=path=>fetch(path).then(x=>x.text()),
-	files=['css','html'].map(ext=>url+'index.'+ext),
-	[css,html]=await Promise.all(files.map(importFile))
-	config.dom=`<style>${css}</style>${html}`
 	//@todo rename youtube-viewer to youtube-player
 	await silo(url,'youtube-viewer',youtube.player)
 }
@@ -47,7 +41,7 @@ youtube.player=class extends silo.viewer
 		// let renderer=x=>x
 		// this.state=truth(logic(state),(...args)=>renderer(args))
 		// renderer=v.render(this.shadowRoot,this,output)
-		this.shadowRoot.innerHTML=config.dom
+		this.shadowRoot.innerHTML=`<style>${config.css}</style><div id=youtube-player></div>`
 		this.player=null
 		this.state=youtube.logic(state)
 	}
