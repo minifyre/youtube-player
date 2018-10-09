@@ -8,7 +8,7 @@ const
 // 2 – paused
 // 3 – buffering
 // 5 – video cued
-function input(viewer,{data})
+function input({data},viewer)
 {//@todo move into different file & put intput into import statement here
 	const
 	{player}=viewer,
@@ -53,7 +53,7 @@ youtube.player=class extends silo.viewer
 		events=
 		{
 			onReady:({target})=>output.render(this),
-			onStateChange:evt=>input(this,evt)
+			onStateChange:evt=>input(evt,this)
 		},
 		opts={events,height,videoId,width}
 
