@@ -1,0 +1,13 @@
+{
+	"name": "youtube-viewer",
+	"description": "A YouTube player wrapped inside a custom element.",
+	"homepage": "https://github.com/minifyre/youtube-viewer",
+	"license": "MIT",
+	"version": "0.5.0",
+	"dependencies": {
+		"truth": "minifyre/pane-viewer"
+	},
+	"devDependencies": {
+		"cherub": "minifyre/cherub"
+	}
+}

@@ -1,4 +1,7 @@
-import {config,output,util} from './output.mjs'
+import silo from './output.mjs'
+const
+{config,logic,output,util}=silo,
+{truth,v}=util
 //-1 – unstarted
 // 0 – ended
 // 1 – playing
@@ -6,7 +9,7 @@ import {config,output,util} from './output.mjs'
 // 3 – buffering
 // 5 – video cued
 function input(viewer,{data})
-{
+{//@todo move into different file & put intput into import statement here
 	const
 	{player}=viewer,
 	time=player.getCurrentTime()
@@ -14,6 +17,7 @@ function input(viewer,{data})
 	viewer.state.pause=data===util.yt.PlayerState.PAUSED
 	viewer.state.video_id=player.getVideoData().video_id,
 	viewer.state.time=time
+	console.log(viewer.state)
 	output.event(viewer,'pause',{time})//@todo handle non-pause events
 }
 export default async function youtube(url='/node_modules/youtube-viewer/')
@@ -26,22 +30,26 @@ export default async function youtube(url='/node_modules/youtube-viewer/')
 	})
 	if(error) return {error}
 	util.yt=window.YT
+
 	const
 	importFile=path=>fetch(path).then(x=>x.text()),
 	files=['css','html'].map(ext=>url+'index.'+ext),
 	[css,html]=await Promise.all(files.map(importFile))
 	config.dom=`<style>${css}</style>${html}`
-	customElements.define('youtube-player',youtube.player)
+	//@todo rename youtube-viewer to youtube-player
+	await silo(url,'youtube-viewer',youtube.player)
 }
-youtube.player=class extends HTMLElement
+youtube.player=class extends silo.viewer
 {
-	constructor()
+	constructor(state={})
 	{
-		super()
-		const shadow=this.attachShadow({mode:'open'})
-		shadow.innerHTML=config.dom
+		super(state)
+		// let renderer=x=>x
+		// this.state=truth(logic(state),(...args)=>renderer(args))
+		// renderer=v.render(this.shadowRoot,this,output)
+		this.shadowRoot.innerHTML=config.dom
 		this.player=null
-		this.state=Object.assign({},config.state)
+		this.state=youtube.logic(state)
 	}
 	connectedCallback()//@todo find a less hackish way to do this
 	{
@@ -63,12 +71,5 @@ youtube.player=class extends HTMLElement
 		//@todo use this.player.a instead of query selector?
 		this.shadowRoot.append(document.querySelector('#youtube-player'))
 	}
-	adoptedCallback()
-	{
-		console.error('add adoptedCallback behavior')
-	}
-	disconnectedCallback()
-	{
-		console.error('add disconnectedCallback behavior')
-	}
 }
+Object.assign(youtube,silo)

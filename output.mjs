@@ -1,6 +1,14 @@
-import config from './config.mjs'
-import util from './util.mjs'
-const output={}
+import silo from './util.mjs'
+const
+{config,input,logic,util}=silo,
+{v}=util,
+output=function(state)
+{
+	//generate v-based dom here
+	return []
+}
+//@todo put into silo-template
+	// & change silo-template to assign silo.output.props to new output fn
 output.event=(el,type,evt)=>el.dispatchEvent(new CustomEvent(type,evt))
 output.render=function({player,state})
 {
@@ -8,4 +16,4 @@ output.render=function({player,state})
 	player.loadVideoById(video_id,time)
 	if(paused) player.pauseVideo()
 }
-export {config,output,util}
+export default Object.assign(silo,{output})
