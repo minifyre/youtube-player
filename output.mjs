@@ -2,10 +2,13 @@ import silo from './util.mjs'
 const
 {config,input,logic,util}=silo,
 {v}=util,
-output=function(state)
+output=function(player)
 {
+	const {height,width}=player.state
 	//generate v-based dom here
-	return []
+	return [v('style',{},config.css),
+		v('div',{height,id:'youtube-player',width})
+	]
 }
 //@todo put into silo-template
 	// & change silo-template to assign silo.output.props to new output fn

@@ -35,25 +35,26 @@ export default async function youtube(url='/node_modules/youtube-viewer/')
 }
 youtube.player=class extends silo.viewer
 {
-	constructor(state={})
+	constructor(opts={})
 	{
-		super(state)
-		// let renderer=x=>x
-		// this.state=truth(logic(state),(...args)=>renderer(args))
-		// renderer=v.render(this.shadowRoot,this,output)
-		this.shadowRoot.innerHTML=`<style>${config.css}</style><div id=youtube-player></div>`
+		const state=truth(logic(opts))
+		super(opts)
+		let renderer=x=>x
+		this.state=state//,(...args)=>renderer(args))
+		renderer=v.render(this.shadowRoot,this,output)
 		this.player=null
 		this.state=youtube.logic(state)
 	}
-	connectedCallback()//@todo find a less hackish way to do this
+	connectedCallback()
 	{
 		const
 		viewer=this,
+		{height,width}=this.state,
 		iframe=this.shadowRoot.querySelector('#youtube-player')
 		this.player=new util.yt.Player(iframe,
 		{
-			height:'390',
-			width:'640',
+			height,
+			width,
 			videoId:viewer.state.video_id,
 			events:
 			{
