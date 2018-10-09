@@ -7,7 +7,7 @@ output=function(player)
 	const {height,width}=player.state
 	//generate v-based dom here
 	return [v('style',{},config.css),
-		v('div',{height,id:'youtube-player',width})
+		v('div',{height,id:'player',width})
 	]
 }
 //@todo put into silo-template

@@ -48,20 +48,16 @@ youtube.player=class extends silo.viewer
 	connectedCallback()
 	{
 		const
-		viewer=this,
-		{height,width}=this.state,
-		iframe=this.shadowRoot.querySelector('#youtube-player')
-		this.player=new util.yt.Player(iframe,
+		{shadowRoot,state}=this,
+		{height,video_id:videoId,width}=state,
+		events=
 		{
-			height,
-			width,
-			videoId:viewer.state.video_id,
-			events:
-			{
-				'onReady':({target})=>output.render(this),
-				'onStateChange':evt=>input(viewer,evt)
-			}
-		})
+			onReady:({target})=>output.render(this),
+			onStateChange:evt=>input(this,evt)
+		},
+		opts={events,height,videoId,width}
+
+		this.player=new util.yt.Player(shadowRoot.querySelector('#player'),opts)
 	}
 }
 Object.assign(youtube,silo)
