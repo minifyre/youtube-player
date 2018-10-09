@@ -8,7 +8,7 @@ const
 // 2 – paused
 // 3 – buffering
 // 5 – video cued
-function input(viewer,{data})
+function input({data},viewer)
 {//@todo move into different file & put intput into import statement here
 	const
 	{player}=viewer,
@@ -30,46 +30,34 @@ export default async function youtube(url='/node_modules/youtube-viewer/')
 	})
 	if(error) return {error}
 	util.yt=window.YT
-
-	const
-	importFile=path=>fetch(path).then(x=>x.text()),
-	files=['css','html'].map(ext=>url+'index.'+ext),
-	[css,html]=await Promise.all(files.map(importFile))
-	config.dom=`<style>${css}</style>${html}`
 	//@todo rename youtube-viewer to youtube-player
 	await silo(url,'youtube-viewer',youtube.player)
 }
 youtube.player=class extends silo.viewer
 {
-	constructor(state={})
+	constructor(opts={})
 	{
-		super(state)
-		// let renderer=x=>x
-		// this.state=truth(logic(state),(...args)=>renderer(args))
-		// renderer=v.render(this.shadowRoot,this,output)
-		this.shadowRoot.innerHTML=config.dom
+		const state=truth(logic(opts))
+		super(opts)
+		let renderer=x=>x
+		this.state=state//,(...args)=>renderer(args))
+		renderer=v.render(this.shadowRoot,this,output)
 		this.player=null
 		this.state=youtube.logic(state)
 	}
-	connectedCallback()//@todo find a less hackish way to do this
+	connectedCallback()
 	{
 		const
-		viewer=this,
-		iframe=this.shadowRoot.querySelector('#youtube-player')
-		document.body.append(iframe)//moved outside shadow dom to initalize
-		this.player=new util.yt.Player(iframe,
+		{shadowRoot,state}=this,
+		{height,video_id:videoId,width}=state,
+		events=
 		{
-			height:'390',
-			width:'640',
-			videoId:viewer.state.video_id,
-			events:
-			{
-				'onReady':({target})=>output.render(this),
-				'onStateChange':evt=>input(viewer,evt)
-			}
-		})
-		//@todo use this.player.a instead of query selector?
-		this.shadowRoot.append(document.querySelector('#youtube-player'))
+			onReady:({target})=>output.render(this),
+			onStateChange:evt=>input(evt,this)
+		},
+		opts={events,height,videoId,width}
+
+		this.player=new util.yt.Player(shadowRoot.querySelector('#player'),opts)
 	}
 }
 Object.assign(youtube,silo)

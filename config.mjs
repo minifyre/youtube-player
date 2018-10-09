@@ -3,6 +3,9 @@ const {config}=silo
 config.api='https://www.youtube.com/iframe_api'
 config.state=
 {
+	height:390,
+	width:640,
+
 	//@todo wrap into state.file
 	paused:true,
 	time:6,
