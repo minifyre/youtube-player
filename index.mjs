@@ -50,7 +50,6 @@ youtube.player=class extends silo.viewer
 		const
 		viewer=this,
 		iframe=this.shadowRoot.querySelector('#youtube-player')
-		document.body.append(iframe)//moved outside shadow dom to initalize
 		this.player=new util.yt.Player(iframe,
 		{
 			height:'390',
@@ -62,8 +61,6 @@ youtube.player=class extends silo.viewer
 				'onStateChange':evt=>input(viewer,evt)
 			}
 		})
-		//@todo use this.player.a instead of query selector?
-		this.shadowRoot.append(document.querySelector('#youtube-player'))
 	}
 }
 Object.assign(youtube,silo)
