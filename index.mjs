@@ -7,7 +7,7 @@ const
 // 1 – playing
 // 2 – paused
 // 3 – buffering
-// 5 – video cued
+// 5 – video queued
 function input({data},viewer)
 {//@todo move into different file & put intput into import statement here
 	const
