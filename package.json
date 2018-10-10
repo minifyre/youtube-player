@@ -1,7 +1,7 @@
 {
-	"name": "youtube-viewer",
+	"name": "youtube-player",
 	"description": "A YouTube player wrapped inside a custom element.",
-	"homepage": "https://github.com/minifyre/youtube-viewer",
+	"homepage": "https://github.com/minifyre/youtube-player",
 	"license": "MIT",
 	"version": "0.5.0",
 	"dependencies": {
