@@ -20,7 +20,7 @@ function input({data},viewer)
 	console.log(viewer.state)
 	output.event(viewer,'pause',{time})//@todo handle non-pause events
 }
-export default async function youtube(url='/node_modules/youtube-viewer/')
+export default async function youtube(url='/node_modules/youtube-player/')
 {
 	const {error}=await new Promise(async function(res,rej)
 	{
