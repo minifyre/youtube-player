@@ -36,7 +36,7 @@ youtube.player=class extends silo.viewer
 {
 	constructor(opts={})
 	{
-		const state=truth(logic(opts))
+		const {state}=truth(logic(opts))
 		super(opts)
 		let renderer=x=>x
 		this.state=state//,(...args)=>renderer(args))
