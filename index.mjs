@@ -34,15 +34,9 @@ export default async function youtube(url='/node_modules/youtube-player/')
 }
 youtube.player=class extends silo.viewer
 {
-	constructor(opts={})
+	constructor(state={})
 	{
-		const {state}=truth(logic(opts))
-		super(opts)
-		let renderer=x=>x
-		this.state=state//,(...args)=>renderer(args))
-		renderer=v.render(this.shadowRoot,this,output)
-		this.player=null
-		this.state=youtube.logic(state)
+		super(state,silo)
 	}
 	connectedCallback()
 	{
