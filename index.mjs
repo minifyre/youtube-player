@@ -30,7 +30,7 @@ export default async function youtube(url='/node_modules/youtube-player/')
 	})
 	if(error) return {error}
 	util.yt=window.YT
-	await silo(url,'youtube-player',youtube.player)
+	await util.mkCustomEl(url,'youtube-player',youtube.player)
 }
 youtube.player=class extends silo.viewer
 {
