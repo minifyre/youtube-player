@@ -4,7 +4,7 @@ const
 {v}=util,
 output=function(player)
 {
-	const {height,width}=player.state
+	const {height,width}=player.state.view
 	//generate v-based dom here
 	return [v('style',{},config.css),
 		v('div',{height,id:'player',width})
@@ -15,7 +15,7 @@ output=function(player)
 output.event=(el,type,evt)=>el.dispatchEvent(new CustomEvent(type,evt))
 output.render=function({player,state})
 {
-	const {paused,time,video_id}=state
+	const {paused,time,video_id}=state.file
 	player.loadVideoById(video_id,time)
 	if(paused) player.pauseVideo()
 }

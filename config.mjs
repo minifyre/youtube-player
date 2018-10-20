@@ -3,14 +3,17 @@ const {config}=silo
 config.api='https://www.youtube.com/iframe_api'
 config.state=
 {
-	height:390,
-	width:640,
-	type:'youtube-player',
-
-	//@todo wrap into state.file
-	file:{},
-	paused:true,
-	time:6,
-	video_id:'PUv66718DII'
+	file:
+	{
+		paused:true,
+		time:6,
+		video_id:'PUv66718DII'
+	},
+	view:
+	{
+		height:390,
+		type:'youtube-player',
+		width:640
+	}
 }
 export default silo
