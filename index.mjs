@@ -14,10 +14,9 @@ function input({data},viewer)
 	{player}=viewer,
 	time=player.getCurrentTime()
 	console.log(player.getVideoData())
-	viewer.state.pause=data===util.yt.PlayerState.PAUSED
-	viewer.state.video_id=player.getVideoData().video_id,
-	viewer.state.time=time
-	console.log(viewer.state)
+	viewer.state.file.pause=data===util.yt.PlayerState.PAUSED
+	viewer.state.file.video_id=player.getVideoData().video_id,
+	viewer.state.file.time=time
 	output.event(viewer,'pause',{time})//@todo handle non-pause events
 }
 export default async function youtube(url='/node_modules/youtube-player/')
@@ -42,7 +41,8 @@ youtube.player=class extends silo.viewer
 	{
 		const
 		{shadowRoot,state}=this,
-		{height,video_id:videoId,width}=state,
+		{height,width}=state.view,
+		videoId=state.file.video_id,
 		events=
 		{
 			onReady:({target})=>output.render(this),
