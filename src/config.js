@@ -1,5 +1,3 @@
-import silo from './node_modules/pane-viewer/index.mjs'
-const {config}=silo
 config.api='https://www.youtube.com/iframe_api'
 config.state=
 {
@@ -16,4 +14,3 @@ config.state=
 		width:640
 	}
 }
-export default silo

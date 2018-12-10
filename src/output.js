@@ -1,7 +1,3 @@
-import silo from './util.mjs'
-const
-{config,input,logic,util}=silo,
-{v}=util,
 output=function(player)
 {
 	const {height,width}=player.state.view
@@ -19,4 +15,3 @@ output.render=function({player,state})
 	player.loadVideoById(video_id,time)
 	if(paused) player.pauseVideo()
 }
-export default Object.assign(silo,{output})

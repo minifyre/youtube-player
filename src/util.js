@@ -1,5 +1,3 @@
-import silo from './config.mjs'
-const {util}=silo
 util.loadScript=function(src)//for old timey scripts that pollute global scope
 {
 	return new Promise(function(res,rej)
@@ -15,4 +13,3 @@ util.loadScript=function(src)//for old timey scripts that pollute global scope
 		))
 	})
 }
-export default silo
