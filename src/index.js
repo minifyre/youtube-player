@@ -45,7 +45,7 @@ youtube.player=class extends silo.viewer
 		videoId=state.file.video_id,
 		events=
 		{
-			onReady:({target})=>output.render(this),
+			onReady:({target})=>output.video(this),
 			onStateChange:evt=>input(evt,this)
 		},
 		opts={events,height,videoId,width}
